@@ -24,7 +24,7 @@ npm install babel-loader style-loader css-loader
 npm install autoprefixer html-webpack-plugin open-browser-webpack-plugin --save-dev
 
 ### 安装react react-dom
-npm install --save
+npm install react react-dom --save
 
 ### 配置webpack.config.js和webpack.production.config.js
 
