@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import List from './list.jsx';
 import store from './store';
+import { CHANGE_INPUT_VALUE, ADD_TODO_ITEM, DELETE_TODO_ITEM } from './store/actionTypes.js';
 
 class ToDoList extends Component {
   constructor() {
@@ -14,21 +15,21 @@ class ToDoList extends Component {
   }
   handleOnChange(event) {
     const action = {
-      type: 'changeInputValue',
+      type: CHANGE_INPUT_VALUE,
       inputValue: event.target.value,
     }
     store.dispatch(action);
   }
   handleOnKeyUp(event) {
     const action = {
-      type: 'addItem',
+      type: ADD_TODO_ITEM,
       event,
     }
     store.dispatch(action);
   }
   removeItem(index) {
     const action = {
-      type: 'removeItem',
+      type: DELETE_TODO_ITEM,
       index,
     }
     store.dispatch(action);
