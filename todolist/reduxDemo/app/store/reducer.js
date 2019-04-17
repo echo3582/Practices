@@ -21,7 +21,9 @@ export default (state=defaultState, action) => {
   }
   if (action.type === DELETE_TODO_ITEM) {
     let newState = {...state};
-    newState.list.splice(action.index, 1);
+    newState.list = newState.list.filter((item, index) => {
+      return index !== action.index;
+    })
     return newState;
   }
   return state;

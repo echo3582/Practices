@@ -1,45 +1,48 @@
 import React, { Component, Fragment } from 'react';
 import List from './list.jsx';
-import store from './store';
 import { changeInputValue, addTodoItem, deleteTodoItem } from './store/actionCreator.js';
+import { connect } from 'react-redux';
 
 class ToDoList extends Component {
-  constructor() {
-    super();
-    this.state = store.getState();
-    this.handleChange = this.handleChange.bind(this);
-    store.subscribe(this.handleChange);
-  }
-  handleChange() {
-    this.setState(store.getState());
-  }
-  handleOnChange(event) {
-    let action = changeInputValue(event.target.value);
-    store.dispatch(action);
-  }
-  handleOnKeyUp(event) {
-    const action = addTodoItem(event);
-    store.dispatch(action);
-  }
-  removeItem(index) {
-    const action = deleteTodoItem(index);
-    store.dispatch(action);
-  }
   render() {
     return (
       <Fragment>
         <input
-          value={this.state.inputValue}
-          onChange={(event) => this.handleOnChange(event)}
-          onKeyUp={(event) => this.handleOnKeyUp(event)}
+          value={this.props.inputValue}
+          onChange={(event) => this.props.handleOnChange(event)}
+          onKeyUp={(event) => this.props.handleOnKeyUp(event)}
         />
         <List
-          list={this.state.list}
-          removeItem={(index) => this.removeItem(index)}
+          list={this.props.list}
+          removeItem={(index) => this.props.removeItem(index)}
         />
       </Fragment>
     )
   }
 }
 
-export default ToDoList;
+const mapStateToProps = (state) => {
+  return {
+    inputValue: state.inputValue,
+    list: state.list,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleOnChange(event) {
+      const action = changeInputValue(event.target.value);
+      dispatch(action);
+    },
+    handleOnKeyUp(event) {
+      const action = addTodoItem(event);
+      dispatch(action);
+    },
+    removeItem(index) {
+      const action = deleteTodoItem(index);
+      dispatch(action);
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToDoList);
