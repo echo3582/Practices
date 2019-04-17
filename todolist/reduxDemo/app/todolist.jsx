@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import List from './list.jsx';
 import store from './store';
-import { CHANGE_INPUT_VALUE, ADD_TODO_ITEM, DELETE_TODO_ITEM } from './store/actionTypes.js';
+import { changeInputValue, addTodoItem, deleteTodoItem } from './store/actionCreator.js';
 
 class ToDoList extends Component {
   constructor() {
@@ -14,24 +14,15 @@ class ToDoList extends Component {
     this.setState(store.getState());
   }
   handleOnChange(event) {
-    const action = {
-      type: CHANGE_INPUT_VALUE,
-      inputValue: event.target.value,
-    }
+    let action = changeInputValue(event.target.value);
     store.dispatch(action);
   }
   handleOnKeyUp(event) {
-    const action = {
-      type: ADD_TODO_ITEM,
-      event,
-    }
+    const action = addTodoItem(event);
     store.dispatch(action);
   }
   removeItem(index) {
-    const action = {
-      type: DELETE_TODO_ITEM,
-      index,
-    }
+    const action = deleteTodoItem(index);
     store.dispatch(action);
   }
   render() {
